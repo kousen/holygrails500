@@ -5,14 +5,10 @@ import spock.lang.Specification
 
 class CastleSpec extends Specification implements DomainUnitTest<Castle> {
 
-    def setup() {
-    }
+    Castle camelot = new Castle(name: 'Camelot', city: 'Marlborough', state: 'CT')
 
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "test valid"() {
+        expect:"valid castle"
+            camelot.validate()
     }
 }

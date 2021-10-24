@@ -12,7 +12,9 @@ class KnightControllerSpec extends Specification implements ControllerUnitTest<K
 
         // TODO: Populate valid properties like...
         //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        params.title = 'King'
+        params.name = 'Arthur'
+        // assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
     }
 
     void "Test the index action returns the correct model"() {

@@ -14,13 +14,13 @@ class KnightServiceSpec extends Specification {
 
     private Long setupData() {
         // TODO: Populate valid domain instances and return a valid ID
-        //new Knight(...).save(flush: true, failOnError: true)
-        //new Knight(...).save(flush: true, failOnError: true)
-        //Knight knight = new Knight(...).save(flush: true, failOnError: true)
-        //new Knight(...).save(flush: true, failOnError: true)
-        //new Knight(...).save(flush: true, failOnError: true)
-        assert false, "TODO: Provide a setupData() implementation for this generated test suite"
-        //knight.id
+        new Knight(title: 'King', name: 'Arthur').save(flush: true, failOnError: true)
+        new Knight(title: 'Sir', name: 'Lancelot').save(flush: true, failOnError: true)
+        Knight knight = new Knight(title: 'Sir', name: 'Galahad').save(flush: true, failOnError: true)
+        new Knight(title: 'Queen', name: 'Guinevere').save(flush: true, failOnError: true)
+        new Knight(title: 'Sir', name: 'Robin').save(flush: true, failOnError: true)
+        // assert false, "TODO: Provide a setupData() implementation for this generated test suite"
+        knight.id
     }
 
     void "test get"() {
@@ -38,7 +38,7 @@ class KnightServiceSpec extends Specification {
 
         then:
         knightList.size() == 2
-        assert false, "TODO: Verify the correct instances are returned"
+        // assert false, "TODO: Verify the correct instances are returned"
     }
 
     void "test count"() {
@@ -64,8 +64,8 @@ class KnightServiceSpec extends Specification {
 
     void "test save"() {
         when:
-        assert false, "TODO: Provide a valid instance to save"
-        Knight knight = new Knight()
+        //assert false, "TODO: Provide a valid instance to save"
+        Knight knight = new Knight(title: 'King', name: 'Arthur')
         knightService.save(knight)
 
         then:

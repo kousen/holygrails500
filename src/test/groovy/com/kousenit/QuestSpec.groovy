@@ -5,14 +5,10 @@ import spock.lang.Specification
 
 class QuestSpec extends Specification implements DomainUnitTest<Quest> {
 
-    def setup() {
-    }
+    Quest quest = new Quest(name: 'Seek the grail')
 
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "test valid"() {
+        expect:"valid quest"
+            quest.validate()
     }
 }

@@ -4,15 +4,10 @@ import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
 class KnightSpec extends Specification implements DomainUnitTest<Knight> {
+    Knight knight = new Knight(title: 'King', name: 'Arthur')
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == false
+    void "test valid"() {
+        expect:"valid knight"
+            knight.validate()
     }
 }

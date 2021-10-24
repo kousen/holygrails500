@@ -12,7 +12,10 @@ class CastleControllerSpec extends Specification implements ControllerUnitTest<C
 
         // TODO: Populate valid properties like...
         //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        params['name'] = 'Camelot'
+        params.city = 'Marlborough'
+        params.state = 'CT'
+        //assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
     }
 
     void "Test the index action returns the correct model"() {
@@ -39,6 +42,11 @@ class CastleControllerSpec extends Specification implements ControllerUnitTest<C
     }
 
     void "Test the save action with a null instance"() {
+        given:
+        controller.geocoderService = Mock(GeocoderService) {
+            fillInLatLng(_ as Castle) >> { Castle castle -> castle }
+        }
+
         when:"Save is called for a domain instance that doesn't exist"
         request.contentType = FORM_CONTENT_TYPE
         request.method = 'POST'
@@ -51,6 +59,9 @@ class CastleControllerSpec extends Specification implements ControllerUnitTest<C
 
     void "Test the save action correctly persists"() {
         given:
+        controller.geocoderService = Mock(GeocoderService) {
+            1 * fillInLatLng(_ as Castle) >> { Castle castle -> castle }
+        }
         controller.castleService = Mock(CastleService) {
             1 * save(_ as Castle)
         }
@@ -72,6 +83,9 @@ class CastleControllerSpec extends Specification implements ControllerUnitTest<C
 
     void "Test the save action with an invalid instance"() {
         given:
+        controller.geocoderService = Mock(GeocoderService) {
+            1 * fillInLatLng(_ as Castle) >> { Castle castle -> castle }
+        }
         controller.castleService = Mock(CastleService) {
             1 * save(_ as Castle) >> { Castle castle ->
                 throw new ValidationException("Invalid instance", castle.errors)
@@ -155,6 +169,9 @@ class CastleControllerSpec extends Specification implements ControllerUnitTest<C
 
     void "Test the update action correctly persists"() {
         given:
+        controller.geocoderService = Mock(GeocoderService) {
+            1 * fillInLatLng(_ as Castle) >> { Castle castle -> castle }
+        }
         controller.castleService = Mock(CastleService) {
             1 * save(_ as Castle)
         }
@@ -176,6 +193,9 @@ class CastleControllerSpec extends Specification implements ControllerUnitTest<C
 
     void "Test the update action with an invalid instance"() {
         given:
+        controller.geocoderService = Mock(GeocoderService) {
+            1 * fillInLatLng(_ as Castle) >> { Castle castle -> castle }
+        }
         controller.castleService = Mock(CastleService) {
             1 * save(_ as Castle) >> { Castle castle ->
                 throw new ValidationException("Invalid instance", castle.errors)

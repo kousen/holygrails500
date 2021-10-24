@@ -14,13 +14,14 @@ class TaskServiceSpec extends Specification {
 
     private Long setupData() {
         // TODO: Populate valid domain instances and return a valid ID
-        //new Task(...).save(flush: true, failOnError: true)
-        //new Task(...).save(flush: true, failOnError: true)
-        //Task task = new Task(...).save(flush: true, failOnError: true)
-        //new Task(...).save(flush: true, failOnError: true)
-        //new Task(...).save(flush: true, failOnError: true)
-        assert false, "TODO: Provide a setupData() implementation for this generated test suite"
-        //task.id
+        Quest quest = new Quest(name: 'Seek the grail').save(flush: true)
+        new Task(name: 'Defeat the Black Knight', quest: quest).save(flush: true, failOnError: true)
+        new Task(name: 'Bring out your dead', quest: quest).save(flush: true, failOnError: true)
+        Task task = new Task(name: 'Answer the bridgekeeper', quest: quest).save(flush: true, failOnError: true)
+        new Task(name: 'Run away', quest: quest).save(flush: true, failOnError: true)
+        new Task(name: 'Flee from killer rabbit', quest: quest).save(flush: true, failOnError: true)
+        // assert false, "TODO: Provide a setupData() implementation for this generated test suite"
+        task.id
     }
 
     void "test get"() {
@@ -38,7 +39,7 @@ class TaskServiceSpec extends Specification {
 
         then:
         taskList.size() == 2
-        assert false, "TODO: Verify the correct instances are returned"
+        // assert false, "TODO: Verify the correct instances are returned"
     }
 
     void "test count"() {
@@ -64,8 +65,9 @@ class TaskServiceSpec extends Specification {
 
     void "test save"() {
         when:
-        assert false, "TODO: Provide a valid instance to save"
-        Task task = new Task()
+        // assert false, "TODO: Provide a valid instance to save"
+        Quest quest = new Quest(name: 'Seek the grail').save(flush: true)
+        Task task = new Task(name: 'Defeat the Black Knight', quest: quest)
         taskService.save(task)
 
         then:

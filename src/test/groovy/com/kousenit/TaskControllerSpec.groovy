@@ -12,7 +12,10 @@ class TaskControllerSpec extends Specification implements ControllerUnitTest<Tas
 
         // TODO: Populate valid properties like...
         //params["name"] = 'someValidName'
-        assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
+        params.name = 'Defeat the Black Knight'
+        params.priority = 5
+        params.completed = true
+        // assert false, "TODO: Provide a populateValidParams() implementation for this generated test suite"
     }
 
     void "Test the index action returns the correct model"() {

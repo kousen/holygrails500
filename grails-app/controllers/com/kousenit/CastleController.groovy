@@ -31,6 +31,7 @@ class CastleController {
 
         try {
             geocoderService.fillInLatLng(castle)
+            println castle
             castleService.save(castle)
         } catch (ValidationException e) {
             respond castle.errors, view:'create'

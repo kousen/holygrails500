@@ -14,13 +14,13 @@ class QuestServiceSpec extends Specification {
 
     private Long setupData() {
         // TODO: Populate valid domain instances and return a valid ID
-        //new Quest(...).save(flush: true, failOnError: true)
-        //new Quest(...).save(flush: true, failOnError: true)
-        //Quest quest = new Quest(...).save(flush: true, failOnError: true)
-        //new Quest(...).save(flush: true, failOnError: true)
-        //new Quest(...).save(flush: true, failOnError: true)
-        assert false, "TODO: Provide a setupData() implementation for this generated test suite"
-        //quest.id
+        new Quest(name: 'Seek the grail').save(flush: true, failOnError: true)
+        new Quest(name: 'Open the Ark').save(flush: true, failOnError: true)
+        Quest quest = new Quest(name: 'Close the Ark').save(flush: true, failOnError: true)
+        new Quest(name: 'Find the headpiece for the Staff of Ra').save(flush: true, failOnError: true)
+        new Quest(name: 'Put the Cross or Coronado in a museum').save(flush: true, failOnError: true)
+        // assert false, "TODO: Provide a setupData() implementation for this generated test suite"
+        quest.id
     }
 
     void "test get"() {
@@ -38,7 +38,7 @@ class QuestServiceSpec extends Specification {
 
         then:
         questList.size() == 2
-        assert false, "TODO: Verify the correct instances are returned"
+        // assert false, "TODO: Verify the correct instances are returned"
     }
 
     void "test count"() {
@@ -64,8 +64,8 @@ class QuestServiceSpec extends Specification {
 
     void "test save"() {
         when:
-        assert false, "TODO: Provide a valid instance to save"
-        Quest quest = new Quest()
+        //assert false, "TODO: Provide a valid instance to save"
+        Quest quest = new Quest(name: 'Seek the grail')
         questService.save(quest)
 
         then:
