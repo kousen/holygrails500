@@ -3,10 +3,11 @@ package holygrails500
 import com.kousenit.Castle
 import com.kousenit.GeocoderService
 import com.kousenit.Quest
+import grails.gorm.transactions.Transactional
 import grails.util.Environment
 
+@Transactional
 class BootStrap {
-    GeocoderService geocoderService
 
     def init = { servletContext ->
         if (Environment.current != Environment.TEST && Quest.count() == 0) {
@@ -22,9 +23,7 @@ class BootStrap {
             Castle espn = new Castle(name: 'ESPN', city: 'Bristol', state: 'CT')
             Castle yale = new Castle(name: 'Yale', city: 'New Haven', state: 'CT')
 
-            [camelot, espn, yale].collect {
-                geocoderService.fillInLatLng(it).save(failOnError: true)
-            }
+            [camelot, espn, yale].collect {it.save(failOnError: true) }
         }
     }
 

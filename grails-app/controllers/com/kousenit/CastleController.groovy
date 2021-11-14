@@ -6,7 +6,6 @@ import static org.springframework.http.HttpStatus.*
 class CastleController {
 
     CastleService castleService
-    GeocoderService geocoderService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -30,7 +29,6 @@ class CastleController {
         }
 
         try {
-            geocoderService.fillInLatLng(castle)
             println castle
             castleService.save(castle)
         } catch (ValidationException e) {
@@ -58,7 +56,6 @@ class CastleController {
         }
 
         try {
-            geocoderService.fillInLatLng(castle)
             castleService.save(castle)
         } catch (ValidationException e) {
             respond castle.errors, view:'edit'
