@@ -1,8 +1,13 @@
 package com.kousenit
 
+import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+
 import static org.springframework.http.HttpStatus.*
 
+@CompileStatic
 class KnightController {
 
     KnightService knightService
@@ -22,6 +27,7 @@ class KnightController {
         respond new Knight(params)
     }
 
+    @CompileDynamic
     def save(Knight knight) {
         if (knight == null) {
             notFound()
@@ -48,6 +54,8 @@ class KnightController {
         respond knightService.get(id)
     }
 
+    @CompileDynamic
+    @Transactional
     def update(Knight knight) {
         if (knight == null) {
             notFound()
@@ -70,6 +78,7 @@ class KnightController {
         }
     }
 
+    @CompileDynamic
     def delete(Long id) {
         if (id == null) {
             notFound()
@@ -87,6 +96,7 @@ class KnightController {
         }
     }
 
+    @CompileDynamic
     protected void notFound() {
         request.withFormat {
             form multipartForm {

@@ -1,8 +1,13 @@
 package com.kousenit
 
+import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+
 import static org.springframework.http.HttpStatus.*
 
+@CompileStatic
 class QuestController {
 
     QuestService questService
@@ -22,6 +27,7 @@ class QuestController {
         respond new Quest(params)
     }
 
+    @CompileDynamic
     def save(Quest quest) {
         if (quest == null) {
             notFound()
@@ -48,6 +54,8 @@ class QuestController {
         respond questService.get(id)
     }
 
+    @CompileDynamic
+    @Transactional
     def update(Quest quest) {
         if (quest == null) {
             notFound()
@@ -70,6 +78,7 @@ class QuestController {
         }
     }
 
+    @CompileDynamic
     def delete(Long id) {
         if (id == null) {
             notFound()
@@ -87,6 +96,7 @@ class QuestController {
         }
     }
 
+    @CompileDynamic
     protected void notFound() {
         request.withFormat {
             form multipartForm {
