@@ -5,11 +5,16 @@ import com.kousenit.CastleService
 import com.kousenit.Quest
 import com.kousenit.QuestService
 import grails.util.Environment
+import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
 
+@CompileStatic
+@Slf4j
 class BootStrap {
     QuestService questService
     CastleService castleService
     def init = { servletContext ->
+        log.info("saving seed data")
         if (Environment.current != Environment.TEST && questService.count() == 0) {
             Quest quest = questService.save(new Quest(name: 'Seek the grail')
                     .addToTasks(name: 'Answer the bridgekeeper', priority: 4)

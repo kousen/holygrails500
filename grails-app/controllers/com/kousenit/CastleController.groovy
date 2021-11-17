@@ -1,8 +1,13 @@
 package com.kousenit
 
+import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+
 import static org.springframework.http.HttpStatus.*
 
+@CompileStatic
 class CastleController {
 
     CastleService castleService
@@ -22,6 +27,7 @@ class CastleController {
         respond new Castle(params)
     }
 
+    @CompileDynamic
     def save(Castle castle) {
         if (castle == null) {
             notFound()
@@ -29,7 +35,6 @@ class CastleController {
         }
 
         try {
-            println castle
             castleService.save(castle)
         } catch (ValidationException e) {
             respond castle.errors, view:'create'
@@ -49,6 +54,8 @@ class CastleController {
         respond castleService.get(id)
     }
 
+    @CompileDynamic
+    @Transactional
     def update(Castle castle) {
         if (castle == null) {
             notFound()
@@ -71,6 +78,7 @@ class CastleController {
         }
     }
 
+    @CompileDynamic
     def delete(Long id) {
         if (id == null) {
             notFound()
@@ -88,6 +96,7 @@ class CastleController {
         }
     }
 
+    @CompileDynamic
     protected void notFound() {
         request.withFormat {
             form multipartForm {

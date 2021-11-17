@@ -4,8 +4,8 @@ class Castle {
     String name
     String city
     String state
-    double latitude
-    double longitude
+    Double latitude
+    Double longitude
 
     String toString() { "Castle $name" }
 
@@ -15,7 +15,7 @@ class Castle {
         name blank: false
         city blank: false
         state blank: false
-        latitude min: -90d, max: 90d
-        longitude()
+        latitude min: -90d, max: 90d, nullable: true
+        longitude min: -180d, max: 180d, nullable: true
     }
 }

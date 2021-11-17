@@ -1,27 +1,42 @@
 package com.kousenit
 
-import grails.gorm.transactions.Transactional
-import groovy.json.JsonSlurper
+import com.googleapis.maps.GeocoderClient
+import com.googleapis.maps.GoogleMapsConfiguration
+import com.googleapis.maps.Location
+import groovy.transform.CompileStatic
+import groovy.util.logging.Slf4j
+import io.micronaut.http.client.exceptions.HttpClientResponseException
+import org.springframework.beans.factory.annotation.Autowired
 
-import java.nio.charset.StandardCharsets
-
-@Transactional
+@CompileStatic
+@Slf4j
 class GeocoderService {
-    private static final String BASE = 'https://maps.googleapis.com/maps/api/geocode/json?'
-    private static final String KEY = "AIzaSyDw_d6dfxDEI7MAvqfGXEIsEMwjC1PWRno"
 
-    def fillInLatLng(String city, String state) {
-        String encoded = [city, state].collect {
-            URLEncoder.encode(it, StandardCharsets.UTF_8)
-        }.join(',')
-        String qs = "address=$encoded&key=$KEY"
-        def root = new JsonSlurper().parse("$BASE$qs".toURL())
-        return root.results[0].geometry.location
-//        def loc = root.results[0].geometry.location
-//        if (loc.lat) {
-//            castle.latitude = loc.lat.toDouble()
-//            castle.longitude = loc.lng.toDouble()
-//        }
-//        return castle
+    @Autowired
+    GeocoderClient geocoderClient
+
+    @Autowired
+    GoogleMapsConfiguration googleMapsConfiguration
+
+    Optional<Location> fillInLatLng(Castle castle) {
+        fillInLatLng(castle.city, castle.state)
+    }
+
+    Optional<Location> fillInLatLng(String city, String state) {
+        try {
+            if (googleMapsConfiguration.getKey()) {
+                String address = [city, state]
+                        .collect {URLEncoder.encode(it, "UTF-8") }
+                        .join(",")
+                return Optional.of(geocoderClient.fetchGeocodeResponse(address, googleMapsConfiguration.getKey()).results.first().geometry.location)
+            } else {
+                log.warn("set googlemaps.key to fetch lat/long")
+            }
+        } catch (NoSuchElementException e) {
+            log.error("empty result fetching location for {} {}", city, state)
+        } catch (HttpClientResponseException e) {
+            log.error("HTTP Client response exception {} fetching location for {} {}", e.status.code, city, state)
+        }
+        Optional.empty()
     }
 }

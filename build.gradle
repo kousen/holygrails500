@@ -35,6 +35,7 @@ configurations {
 dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     compileOnly "io.micronaut:micronaut-inject-groovy"
+    implementation "io.micronaut:micronaut-http-client"
     console "org.grails:grails-console"
     implementation 'org.codehaus.groovy:groovy-datetime:3.0.7'
     implementation "org.springframework.boot:spring-boot-starter-logging"

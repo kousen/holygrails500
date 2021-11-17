@@ -1,8 +1,13 @@
 package com.kousenit
 
+import grails.gorm.transactions.Transactional
 import grails.validation.ValidationException
+import groovy.transform.CompileDynamic
+import groovy.transform.CompileStatic
+
 import static org.springframework.http.HttpStatus.*
 
+@CompileStatic
 class TaskController {
 
     TaskService taskService
@@ -22,6 +27,7 @@ class TaskController {
         respond new Task(params)
     }
 
+    @CompileDynamic
     def save(Task task) {
         if (task == null) {
             notFound()
@@ -48,6 +54,8 @@ class TaskController {
         respond taskService.get(id)
     }
 
+    @CompileDynamic
+    @Transactional
     def update(Task task) {
         if (task == null) {
             notFound()
@@ -70,6 +78,7 @@ class TaskController {
         }
     }
 
+    @CompileDynamic
     def delete(Long id) {
         if (id == null) {
             notFound()
@@ -87,6 +96,7 @@ class TaskController {
         }
     }
 
+    @CompileDynamic
     protected void notFound() {
         request.withFormat {
             form multipartForm {

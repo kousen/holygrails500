@@ -34,4 +34,7 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
+logger("holygrails500", TRACE)
+logger("com.kousenit", TRACE)
+logger("io.micronaut.http.client", TRACE)
 root(ERROR, ['STDOUT'])

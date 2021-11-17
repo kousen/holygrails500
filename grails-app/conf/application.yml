@@ -137,3 +137,6 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+---
+googlemaps:
+    key: 'AIzaSyDw_d6dfxDEI7MAvqfGXEIsEMwjC1PWRno' # Don't have this in configuration. Load it via env. variables

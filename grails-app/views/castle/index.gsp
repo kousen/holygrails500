@@ -21,25 +21,27 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <script type="text/javascript">
-                google.charts.load('current', {'packages': ['map']});
-                google.charts.setOnLoadCallback(drawVisualization);
+            <g:if test="${castleList.any { it.latitude && it.longitude }}">
+<script type="text/javascript">
+google.charts.load('current', {'packages': ['map']});
+google.charts.setOnLoadCallback(drawVisualization);
 
-                function drawVisualization() {
-                    var map = new google.visualization.Map(document.getElementById('map_div'));
-                    var table = new google.visualization.DataTable();
-                    table.addColumn('number', 'Lat');
-                    table.addColumn('number', 'Lng');
-                    table.addColumn('string', 'Name');
-                    $.getJSON('/castle/index.json').done(function (data) {
-                        $.each(data, function (i, castle) {
-                            table.addRow([castle.latitude, castle.longitude, castle.name]);
-                        });
-                        map.draw(table, {showTip: true});
-                    });
-                }
-            </script>
+function drawVisualization() {
+var map = new google.visualization.Map(document.getElementById('map_div'));
+var table = new google.visualization.DataTable();
+table.addColumn('number', 'Lat');
+table.addColumn('number', 'Lng');
+table.addColumn('string', 'Name');
+$.getJSON('/castle/index.json').done(function (data) {
+$.each(data, function (i, castle) {
+table.addRow([castle.latitude, castle.longitude, castle.name]);
+});
+map.draw(table, {showTip: true});
+});
+}
+</script>
             <div id="map_div"></div>
+            </g:if>
 
             <f:table collection="${castleList}" />
 
