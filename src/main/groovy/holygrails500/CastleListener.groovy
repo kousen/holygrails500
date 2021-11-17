@@ -7,6 +7,7 @@ import grails.events.annotation.Subscriber
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.grails.datastore.mapping.engine.event.AbstractPersistenceEvent
+import org.grails.datastore.mapping.engine.event.EventType
 import org.grails.datastore.mapping.engine.event.PreInsertEvent
 import org.grails.datastore.mapping.engine.event.PreUpdateEvent
 import org.springframework.beans.factory.annotation.Autowired
@@ -22,25 +23,30 @@ class CastleListener {
 
     @Subscriber
     void beforeInsert(PreInsertEvent event) {
-        log.info("on pre insert event")
         updateCastle(event)
     }
 
     @Subscriber
     void beforeUpdate(PreUpdateEvent event) {
-        log.info("on pre update event")
         updateCastle(event)
     }
 
     private void updateCastle(AbstractPersistenceEvent event) {
-        if (event.entityObject instanceof Castle) {
+        if (event.entityObject instanceof Castle &&
+                (
+                        event.eventType == EventType.PreInsert ||
+                        (event.eventType == EventType.PreUpdate && (((Castle) event.entityObject).isDirty('city') || ((Castle) event.entityObject).isDirty('state')))
+                )
+        ) {
             String city = event.entityAccess.getProperty('city')
             String state = event.entityAccess.getProperty('state')
-            geocoderService.fillInLatLng(city, state).ifPresent(loc -> {
-                Serializable id = ((Castle)event.entityObject).id
-                castleService.updateLatitude(id, loc.lat)
-                castleService.updateLongitude(id, loc.lng)
-            })
+            if (city || state) {
+                geocoderService.fillInLatLng(city, state).ifPresent(loc -> {
+                    Serializable id = ((Castle)event.entityObject).id
+                    castleService.updateLatitude(id, loc.lat)
+                    castleService.updateLongitude(id, loc.lng)
+                })
+            }
         }
     }
 }
