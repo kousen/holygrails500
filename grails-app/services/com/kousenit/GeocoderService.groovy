@@ -28,7 +28,11 @@ class GeocoderService {
                 String address = [city, state]
                         .collect {URLEncoder.encode(it, "UTF-8") }
                         .join(",")
-                return Optional.of(geocoderClient.fetchGeocodeResponse(address, googleMapsConfiguration.getKey()).results.first().geometry.location)
+                return Optional.of(
+                        geocoderClient.fetchGeocodeResponse(
+                                address,
+                                googleMapsConfiguration.getKey()).results.first().geometry.location
+                )
             } else {
                 log.warn("set googlemaps.key to fetch lat/long")
             }

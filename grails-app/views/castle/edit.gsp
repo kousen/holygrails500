@@ -29,7 +29,11 @@
             <g:form resource="${this.castle}" method="PUT">
                 <g:hiddenField name="version" value="${this.castle?.version}" />
                 <fieldset class="form">
-                    <f:all bean="castle"/>
+                    <f:with bean="castle">
+                        <f:field property="name"/>
+                        <f:field property="city"/>
+                        <f:field property="state"/>
+                    </f:with>
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />

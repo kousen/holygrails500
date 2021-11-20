@@ -33,16 +33,17 @@ class CastleListener {
 
     private void updateCastle(AbstractPersistenceEvent event) {
         if (event.entityObject instanceof Castle &&
-                (
-                        event.eventType == EventType.PreInsert ||
-                        (event.eventType == EventType.PreUpdate && (((Castle) event.entityObject).isDirty('city') || ((Castle) event.entityObject).isDirty('state')))
+                (event.eventType == EventType.PreInsert ||
+                        (event.eventType == EventType.PreUpdate &&
+                                (((Castle) event.entityObject).isDirty('city') ||
+                                        ((Castle) event.entityObject).isDirty('state')))
                 )
         ) {
             String city = event.entityAccess.getProperty('city')
             String state = event.entityAccess.getProperty('state')
             if (city || state) {
                 geocoderService.fillInLatLng(city, state).ifPresent(loc -> {
-                    Serializable id = ((Castle)event.entityObject).id
+                    Serializable id = ((Castle) event.entityObject).id
                     castleService.updateLatitude(id, loc.lat)
                     castleService.updateLongitude(id, loc.lng)
                 })
